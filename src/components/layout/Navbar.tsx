@@ -1,203 +1,253 @@
-import * as React from "react"
-import { Link } from "react-router-dom"
+import React, { useState } from "react";
 import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleDashedIcon,
-} from "lucide-react"
+  Search,
+  ShoppingCart,
+  Grip,
+  User,
+  Menu,
+} from "lucide-react";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+// --- Cleaned data focusing only on the premium product grid ---
+const navigationData = [
+  {
+    label: "Processors",
+    title: "Processors",
+    mainItems: [
+      {
+        name: "Intel Core i3",
+        bg: "bg-blue-100",
+        img: "/images/processors/intel/i3.jpg",
+      },
+      {
+        name: "Intel Core i5",
+        bg: "bg-blue-100",
+        img: "/images/processors/intel/i5.jpg",
+      },
+      {
+        name: "Intel Core i7",
+        bg: "bg-blue-100",
+        img: "/images/processors/intel/i7.jpg",
+      },
+      {
+        name: "Intel Core i9",
+        bg: "bg-blue-100",
+        img: "/images/processors/intel/i9.jpg",
+      },
+      {
+        name: "Ryzen 3",
+        bg: "bg-orange-100",
+        img: "/images/processors/amd/ryzen 3.webp",
+      },
+      {
+        name: "Ryzen 5",
+        bg: "bg-orange-100",
+        img: "/images/processors/amd/ryzen 5.jpg",
+      },
+      {
+        name: "Ryzen 7",
+        bg: "bg-orange-100",
+        img: "/images/processors/amd/ryzen 7.jpg",
+      },
+      {
+        name: "Ryzen 9",
+        bg: "bg-orange-100",
+        img: "/images/processors/amd/ryzen 9.jpg",
+      },
+    ],
+  },
+  {
+    label: "Graphics",
+    title: "Graphics Cards",
+    mainItems: [
+      {
+        name: "RTX 4090",
+        bg: "bg-green-50",
+        img: "/images/graphics/rtx-4090.jpg",
+      },
+      {
+        name: "RX 7900 XTX",
+        bg: "bg-red-50",
+        img: "/images/graphics/rx-7900.jpg",
+      },
+      {
+        name: "RTX 4080",
+        bg: "bg-green-50",
+        img: "/images/graphics/rtx-4080.jpg",
+      },
+      {
+        name: "RX 7800 XT",
+        bg: "bg-red-50",
+        img: "/images/graphics/rx-7800.jpg",
+      },
+    ],
+  },
+  {
+    label: "Storage",
+    title: "Storage Solutions",
+    mainItems: [
+      {
+        name: "2TB NVMe Gen4",
+        bg: "bg-slate-100",
+        img: "/images/storage/nvme.jpg",
+      },
+      {
+        name: "4TB SATA SSD",
+        bg: "bg-slate-100",
+        img: "/images/storage/ssd.jpg",
+      },
+      {
+        name: "8TB HDD",
+        bg: "bg-slate-100",
+        img: "/images/storage/hdd.jpg",
+      },
+    ],
+  },
+];
 
-const components = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-]
+export default function Navbar() {
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-export function NavigationMenuDemo() {
+  const activeData = navigationData.find((nav) => nav.label === activeMenu);
+
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
+    <div
+      className="  w-full font-sans flex justify-center "
+      // onMouseLeave={() => setActiveMenu(null)}
+    >
+      {/* --- Main Top Navbar --- */}
+      <header className="relative z-50 flex  h-[68px] w-[1200px] justify-center items-center bg-white px-4 md:px-6 s">
+        {/* Mobile Hamburger */}
+        <button
+          className="mr-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 lg:hidden"
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+        >
+          <Menu className="h-6 w-6" />
+        </button>
 
-        {/* Getting Started */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>
-            Getting started
-          </NavigationMenuTrigger>
+        {/* Logo */}
+        <a href="/" className="mr-8 flex shrink-0 items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xl font-bold text-blue-600">
+            G
+          </div>
+        </a>
 
-          <NavigationMenuContent>
-            <ul className="w-96">
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built with Tailwind CSS.
-              </ListItem>
+        {/* Desktop Nav Links */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {navigationData.map((item) => (
+            <button
+              key={item.label}
+              onMouseEnter={() => setActiveMenu(item.label)}
+              className={`rounded-full px-5 py-2.5 text-[15px] font-medium transition-colors ${
+                activeMenu === item.label
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+          <a
+            href="/support"
+            className="rounded-full px-5 py-2.5 text-[15px] font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+            onMouseEnter={() => setActiveMenu(null)}
+          >
+            Support
+          </a>
+        </nav>
 
-              <ListItem
-                href="/docs/installation"
-                title="Installation"
-              >
-                How to install dependencies and structure your app.
-              </ListItem>
+        {/* Right Utility Icons */}
+        <div className="ml-auto flex items-center gap-1 sm:gap-2">
+          <button className="inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 transition-colors">
+            <Search className="h-5 w-5" />
+          </button>
+          <button className="inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 transition-colors">
+            <ShoppingCart className="h-5 w-5" />
+          </button>
+          <button className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 transition-colors">
+            <Grip className="h-5 w-5" />
+          </button>
+          <button className="ml-2 h-9 w-9 rounded-full bg-slate-100 overflow-hidden border border-slate-200 hover:border-slate-300 transition-colors flex items-center justify-center">
+            <User className="h-5 w-5 text-slate-500" />
+          </button>
+        </div>
+      </header>
 
-              <ListItem
-                href="/docs/primitives/typography"
-                title="Typography"
-              >
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* Components */}
-        <NavigationMenuItem className="hidden md:flex">
-          <NavigationMenuTrigger>
-            Components
-          </NavigationMenuTrigger>
-
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
+      {/* --- Desktop Mega Menu Dropdown --- */}
+      {activeData && (
+        <div className="absolute left-0 top-[68px] z-40 w-full animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="mx-auto w-full max-w-[1200px] px-2 py-8 ">
+            
+            {/* Product Cards Grid - Clean, no sidebars */}
+            <div className="flex flex-wrap justify-evenly">
+              {activeData.mainItems.map((item, idx) => (
+                <a
+                  key={idx}
+                  href="#"
+                  className="group flex flex-col w-[120px] rounded-2xl bg-slate-50"
                 >
-                  {component.description}
-                </ListItem>
+                  {/* Rounded Image Container */}
+                  <div
+                    className={`h-[120px] w-full rounded-2xl flex items-center justify-center overflow-hidden transition-transform duration-300 ease-out group-hover:scale-[1.03] ${item.bg} `}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="object-contain h-[71%]  mix-blend-multiply"
+                      // mix-blend-multiply helps images with white backgrounds blend into the colored div
+                    />
+                  </div>
+                  {/* Clean Text Below */}
+                  <span className=" p-2 text-[13px] font-medium text-slate-800  text-center group-hover:text-slate-900 transition-colors ">
+                    {item.name}
+                  </span>
+                </a>
               ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+            </div>
+          </div>
+        </div>
+      )}
 
-        {/* With Icon */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>
-            With Icon
-          </NavigationMenuTrigger>
-
-          <NavigationMenuContent>
-            <ul className="grid w-[200px]">
-              <li>
-                <NavigationMenuLink
-                  render={
-                    <Link
-                      to="#"
-                      className="flex flex-row items-center gap-2"
-                    >
-                      <CircleAlertIcon />
-                      Backlog
-                    </Link>
-                  }
-                />
-
-                <NavigationMenuLink
-                  render={
-                    <Link
-                      to="#"
-                      className="flex flex-row items-center gap-2"
-                    >
-                      <CircleDashedIcon />
-                      To Do
-                    </Link>
-                  }
-                />
-
-                <NavigationMenuLink
-                  render={
-                    <Link
-                      to="#"
-                      className="flex flex-row items-center gap-2"
-                    >
-                      <CircleCheckIcon />
-                      Done
-                    </Link>
-                  }
-                />
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        {/* Docs */}
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
-            render={
-              <Link to="/docs">
-                Docs
-              </Link>
-            }
+      {/* --- Mobile Menu Drawer --- */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 flex lg:hidden">
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMobileOpen(false)}
           />
-        </NavigationMenuItem>
-
-      </NavigationMenuList>
-    </NavigationMenu>
-  )
-}
-
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: any) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink
-        render={
-          <Link to={href}>
-            <div className="flex flex-col gap-1 text-sm">
-              <div className="leading-none font-medium">
-                {title}
-              </div>
-
-              <div className="line-clamp-2 text-muted-foreground">
-                {children}
+          <div className="relative w-[85%] max-w-[320px] bg-white h-full shadow-2xl animate-in slide-in-from-left duration-300">
+            <div className="p-4 border-b border-slate-100 flex items-center">
+              <button 
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100"
+                onClick={() => setIsMobileOpen(false)}
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+              <div className="ml-2 flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-lg font-bold text-blue-600">
+                G
               </div>
             </div>
-          </Link>
-        }
-      />
-    </li>
-  )
+            <nav className="flex flex-col p-4 gap-2">
+              {navigationData.map((item) => (
+                <a
+                  key={item.label}
+                  href="#"
+                  className="px-4 py-3 text-[17px] font-medium text-slate-800 rounded-2xl hover:bg-slate-50 transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="h-px bg-slate-100 my-2 mx-4" />
+              <a 
+                href="#" 
+                className="px-4 py-3 text-[17px] font-medium text-slate-800 rounded-2xl hover:bg-slate-50 transition-colors"
+              >
+                Support
+              </a>
+            </nav>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

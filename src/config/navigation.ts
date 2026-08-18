@@ -1,7 +1,6 @@
 import type { LucideIcon } from "lucide-react"
 import {
   Cpu,
-  Gauge,
   HardDrive,
   MemoryStick,
   Monitor,
@@ -13,6 +12,7 @@ export interface NavItem {
   href: string
   description?: string
   icon?: LucideIcon
+  img?:string
   children?: NavItem[]
 }
 
@@ -26,7 +26,9 @@ export const mainNavigation: NavItem[] = [
       {
         label: "Intel",
         href: "/processors/intel",
+        img:"./assets/images/amd_logo.png",
         description: "Intel Core and Xeon processors.",
+
       },
       {
         label: "AMD",
@@ -132,10 +134,4 @@ export const mainNavigation: NavItem[] = [
     ],
   },
 
-  {
-    label: "Performance",
-    href: "/performance",
-    description: "Benchmarks, thermals and system performance.",
-    icon: Gauge,
-  },
 ]
