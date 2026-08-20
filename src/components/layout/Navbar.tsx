@@ -54,7 +54,6 @@ const navigationData = [
       },
     ],
   },
-
   {
     label: "Graphics",
     title: "Graphics Cards",
@@ -81,7 +80,6 @@ const navigationData = [
       },
     ],
   },
-
   {
     label: "Storage",
     title: "Storage Solutions",
@@ -110,7 +108,7 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const activeData = navigationData.find(
-    (nav) => nav.label === activeMenu
+    (nav) => nav.label === activeMenu,
   );
 
   const handleMenuEnter = (label: string) => {
@@ -123,18 +121,13 @@ export default function Navbar() {
 
   return (
     <div className="relative min-h-[100px] w-full font-sans">
-
-      {/* =====================================================
-          DARK / BLUR BACKGROUND
-          ===================================================== */}
-
+      {/* Background overlay */}
       <div
         className={`
           fixed inset-0 z-30
-          bg-slate-950/20
+          bg-black/60
           backdrop-blur-[2px]
           transition-all duration-300 ease-out
-
           ${
             activeData
               ? "pointer-events-auto opacity-100"
@@ -143,87 +136,44 @@ export default function Navbar() {
         `}
       />
 
-      {/* =====================================================
-          MAIN NAVBAR AREA
-
-          max-w-[1400px] controls BOTH navbar and mega menu
-          ===================================================== */}
-
+      {/* Main navbar container */}
       <div
         className="relative z-50 mx-auto w-full max-w-[1400px] px-3"
         onMouseLeave={closeMenus}
       >
-
-        {/* ===================================================
-            NAVBAR
-            =================================================== */}
-
+        {/* Navbar */}
         <header
           className="
-            flex
-            h-[68px]
-            w-full
-            items-center
-            rounded-3xl
-            bg-white
-            px-4
-            shadow-sm
-            md:px-6
+            flex h-[68px] w-full items-center rounded-3xl bg-white
+            px-4 shadow-sm md:px-6
           "
         >
-
-          {/* ===============================================
-              MOBILE MENU BUTTON
-              =============================================== */}
-
+          {/* Mobile menu button */}
           <button
             type="button"
             aria-label="Open menu"
             className="
-              mr-4
-              inline-flex
-              h-10
-              w-10
-              shrink-0
-              items-center
-              justify-center
-              rounded-full
-              text-slate-700
-              transition-colors
-              hover:bg-slate-100
-              lg:hidden
+              mr-4 inline-flex h-10 w-10 shrink-0 items-center
+              justify-center rounded-full text-slate-700
+              transition-colors hover:bg-slate-100 lg:hidden
             "
             onClick={() => setIsMobileOpen(true)}
           >
             <Menu className="h-6 w-6" />
           </button>
 
-          {/* ===============================================
-              LOGO
-              =============================================== */}
-
+          {/* Logo */}
           <a
             href="/"
             className="
-              mr-6
-              flex
-              shrink-0
-              items-center
-              gap-2
+              mr-6 flex shrink-0 items-center gap-2
               md:mr-8
             "
           >
             <div
               className="
-                flex
-                h-8
-                w-8
-                items-center
-                justify-center
-                rounded-full
-                bg-blue-100
-                text-xl
-                font-bold
+                flex h-8 w-8 items-center justify-center
+                rounded-full bg-blue-100 text-xl font-bold
                 text-blue-600
               "
             >
@@ -231,27 +181,16 @@ export default function Navbar() {
             </div>
           </a>
 
-          {/* ===============================================
-              DESKTOP NAVIGATION
-              =============================================== */}
-
+          {/* Desktop navigation */}
           <nav className="hidden items-center gap-1 lg:flex">
-
             {navigationData.map((item) => (
               <button
                 key={item.label}
                 type="button"
                 onMouseEnter={() => handleMenuEnter(item.label)}
                 className={`
-                  relative
-                  rounded-full
-                  px-5
-                  py-2.5
-                  text-[15px]
-                  font-medium
-                  transition-all
-                  duration-200
-
+                  relative rounded-full px-5 py-2.5 text-[15px]
+                  font-medium transition-all duration-200
                   ${
                     activeMenu === item.label
                       ? "bg-slate-100 text-slate-900"
@@ -260,70 +199,32 @@ export default function Navbar() {
                 `}
               >
                 {item.label}
-
-                {/* Small active indicator */}
-
-                {activeMenu === item.label && (
-                  <span
-                    className="
-                      absolute
-                      bottom-0
-                      left-1/2
-                      h-1
-                      w-1
-                      -translate-x-1/2
-                      translate-y-1/2
-                      rounded-full
-                      bg-blue-500
-                    "
-                  />
-                )}
               </button>
             ))}
 
-            {/* =============================================
-                SUPPORT
-                ============================================= */}
-
+            {/* Support */}
             <a
               href="/support"
               onMouseEnter={closeMenus}
               className="
-                rounded-full
-                px-5
-                py-2.5
-                text-[15px]
-                font-medium
-                text-slate-600
-                transition-colors
-                hover:bg-slate-100
-                hover:text-slate-900
+                rounded-full px-5 py-2.5 text-[15px] font-medium
+                text-slate-600 transition-colors
+                hover:bg-slate-100 hover:text-slate-900
               "
             >
               Support
             </a>
           </nav>
 
-          {/* ===============================================
-              RIGHT SIDE ICONS
-              =============================================== */}
-
+          {/* Right side icons */}
           <div className="ml-auto flex items-center gap-1 sm:gap-2">
-
             {/* Search */}
-
             <button
               type="button"
               aria-label="Search"
               className="
-                inline-flex
-                h-10
-                w-10
-                items-center
-                justify-center
-                rounded-full
-                text-slate-700
-                transition-colors
+                inline-flex h-10 w-10 items-center justify-center
+                rounded-full text-slate-700 transition-colors
                 hover:bg-slate-100
               "
             >
@@ -331,66 +232,27 @@ export default function Navbar() {
             </button>
 
             {/* Cart */}
-
             <button
               type="button"
               aria-label="Shopping cart"
               className="
-                inline-flex
-                h-10
-                w-10
-                items-center
-                justify-center
-                rounded-full
-                text-slate-700
-                transition-colors
+                inline-flex h-10 w-10 items-center justify-center
+                rounded-full text-slate-700 transition-colors
                 hover:bg-slate-100
               "
             >
               <ShoppingCart className="h-5 w-5" />
             </button>
 
-            {/* Apps */}
-
-            <button
-              type="button"
-              aria-label="Apps"
-              className="
-                hidden
-                h-10
-                w-10
-                items-center
-                justify-center
-                rounded-full
-                text-slate-700
-                transition-colors
-                hover:bg-slate-100
-                sm:inline-flex
-              "
-            >
-              <Grip className="h-5 w-5" />
-            </button>
-
             {/* User */}
-
             <button
               type="button"
               aria-label="Account"
               className="
-                ml-1
-                flex
-                h-9
-                w-9
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-slate-200
-                bg-slate-100
-                text-slate-500
-                transition-colors
-                hover:border-slate-300
-                sm:ml-2
+                ml-1 flex h-9 w-9 items-center justify-center
+                rounded-full border border-slate-200 bg-slate-100
+                text-slate-500 transition-colors
+                hover:border-slate-300 sm:ml-2
               "
             >
               <User className="h-5 w-5" />
@@ -398,40 +260,16 @@ export default function Navbar() {
           </div>
         </header>
 
-        {/* ===================================================
-            SMALL GAP
-
-            This creates the visual separation between
-            navbar and mega menu.
-            =================================================== */}
-
+        {/* Gap between navbar and mega menu */}
         <div className="h-2" />
 
-        {/* ===================================================
-            MEGA MENU
-
-            IMPORTANT:
-            It has the SAME parent max-width of 1400px.
-            Therefore it matches the navbar width.
-            =================================================== */}
-
+        {/* Mega menu */}
         <div
           className={`
-            absolute
-            left-3
-            right-3
-            top-[78px]
-
-            overflow-hidden
-            rounded-3xl
-            bg-white
-
+            absolute left-3 right-3 top-[78px] overflow-hidden
+            rounded-3xl bg-white
             shadow-[0_20px_60px_rgba(0,0,0,0.12)]
-
-            transition-all
-            duration-300
-            ease-out
-
+            transition-all duration-300 ease-out
             ${
               activeData
                 ? "visible translate-y-0 opacity-100"
@@ -439,229 +277,103 @@ export default function Navbar() {
             }
           `}
         >
-
           {activeData && (
             <div className="px-6 py-7 md:px-8 md:py-8">
-
-              {/* =========================================
-                  MEGA MENU HEADER
-                  ========================================= */}
-
+              {/* Product grid */}
               <div
                 className="
-                  mb-6
-                  flex
-                  items-end
-                  justify-between
-                  border-b
-                  border-slate-100
-                  pb-5
-                "
-              >
-                <div>
-
-                  <h2
-                    className="
-                      text-lg
-                      font-semibold
-                      tracking-tight
-                      text-slate-900
-                    "
-                  >
-                    {activeData.title}
-                  </h2>
-
-                  <p
-                    className="
-                      mt-1
-                      text-sm
-                      text-slate-500
-                    "
-                  >
-                    Explore our{" "}
-                    {activeData.label.toLowerCase()}
-                  </p>
-
-                </div>
-
-                <span
-                  className="
-                    hidden
-                    rounded-full
-                    bg-slate-50
-                    px-3
-                    py-1
-                    text-xs
-                    font-medium
-                    text-slate-500
-                    sm:block
-                  "
-                >
-                  {activeData.mainItems.length} products
-                </span>
-              </div>
-
-              {/* =========================================
-                  PRODUCT GRID
-                  ========================================= */}
-
-              <div
-                className="
-                  grid
-                  grid-cols-2
-                  gap-4
+                  grid grid-cols-2 gap-4
                   sm:grid-cols-4
                   lg:grid-cols-6
                   xl:grid-cols-8
                 "
               >
-
                 {activeData.mainItems.map((item, idx) => (
                   <a
                     key={idx}
                     href="#"
                     className="
-                      group
-                      flex
-                      min-w-0
-                      flex-col
-                      overflow-hidden
-                      rounded-2xl
-                      bg-slate-50
-
-                      transition-all
-                      duration-200
-
-                      hover:-translate-y-1
-                      hover:bg-white
-                      hover:shadow-lg
-                      hover:ring-1
-                      hover:ring-slate-100
+                      group flex min-w-0 flex-col overflow-hidden
+                      rounded-2xl bg-slate-50
+                      transition-all duration-300 ease-out
+                      hover:bg-slate-100 hover:shadow-sm
                     "
                   >
-
                     {/* Product image */}
-
                     <div
                       className={`
-                        flex
-                        h-[110px]
-                        w-full
-                        items-center
-                        justify-center
-                        overflow-hidden
-                        rounded-2xl
+                        flex h-[110px] w-full items-center
+                        justify-center overflow-hidden rounded-2xl
                         ${item.bg}
+                        transition-all duration-300 ease-out
+                        group-hover:brightness-95
                       `}
                     >
                       <img
                         src={item.img}
                         alt={item.name}
                         className="
-                          h-[71%]
-                          max-w-full
-                          object-contain
+                          h-[71%] max-w-full object-contain
                           mix-blend-multiply
-
-                          transition-transform
-                          duration-300
-                          ease-out
-
-                          group-hover:scale-105
+                          transition-all duration-300 ease-out
+                          group-hover:scale-[1.03]
+                          group-hover:brightness-110
                         "
                       />
                     </div>
 
                     {/* Product name */}
-
                     <span
                       className="
-                        flex
-                        min-h-[50px]
-                        items-center
-                        justify-center
-                        p-2
-                        text-center
-                        text-[13px]
-                        font-medium
-                        leading-tight
-                        text-slate-800
-                        transition-colors
+                        flex min-h-[50px] items-center justify-center
+                        p-2 text-center text-[13px] font-medium
+                        leading-tight text-slate-800
+                        transition-colors duration-300
                         group-hover:text-slate-950
                       "
                     >
                       {item.name}
                     </span>
-
                   </a>
                 ))}
-
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* =====================================================
-          MOBILE DRAWER
-          ===================================================== */}
-
+      {/* Mobile drawer */}
       {isMobileOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden">
-
           {/* Mobile backdrop */}
-
           <div
             className="
-              absolute
-              inset-0
-              bg-black/40
-              backdrop-blur-sm
+              absolute inset-0 bg-black/40 backdrop-blur-sm
             "
             onClick={() => setIsMobileOpen(false)}
           />
 
           {/* Drawer */}
-
           <aside
             className="
-              relative
-              h-full
-              w-[85%]
-              max-w-[320px]
-              bg-white
-              shadow-2xl
-              animate-in
-              slide-in-from-left
-              duration-300
+              relative h-full w-[85%] max-w-[320px]
+              bg-white shadow-2xl
+              animate-in slide-in-from-left duration-300
             "
           >
-
             {/* Drawer header */}
-
             <div
               className="
-                flex
-                items-center
-                border-b
-                border-slate-100
-                p-4
+                flex items-center border-b border-slate-100 p-4
               "
             >
-
               <button
                 type="button"
                 aria-label="Close menu"
                 className="
-                  inline-flex
-                  h-10
-                  w-10
-                  items-center
-                  justify-center
-                  rounded-full
-                  text-slate-700
-                  transition-colors
-                  hover:bg-slate-100
+                  inline-flex h-10 w-10 items-center justify-center
+                  rounded-full text-slate-700
+                  transition-colors hover:bg-slate-100
                 "
                 onClick={() => setIsMobileOpen(false)}
               >
@@ -670,42 +382,26 @@ export default function Navbar() {
 
               <div
                 className="
-                  ml-2
-                  flex
-                  h-8
-                  w-8
-                  items-center
-                  justify-center
-                  rounded-full
-                  bg-blue-100
-                  text-lg
-                  font-bold
+                  ml-2 flex h-8 w-8 items-center justify-center
+                  rounded-full bg-blue-100 text-lg font-bold
                   text-blue-600
                 "
               >
                 G
               </div>
-
             </div>
 
-            {/* Mobile links */}
-
+            {/* Mobile navigation */}
             <nav className="flex flex-col gap-2 p-4">
-
               {navigationData.map((item) => (
                 <a
                   key={item.label}
                   href="#"
                   onClick={() => setIsMobileOpen(false)}
                   className="
-                    rounded-2xl
-                    px-4
-                    py-3
-                    text-[17px]
-                    font-medium
-                    text-slate-800
-                    transition-colors
-                    hover:bg-slate-50
+                    rounded-2xl px-4 py-3 text-[17px]
+                    font-medium text-slate-800
+                    transition-colors hover:bg-slate-50
                   "
                 >
                   {item.label}
@@ -718,19 +414,13 @@ export default function Navbar() {
                 href="/support"
                 onClick={() => setIsMobileOpen(false)}
                 className="
-                  rounded-2xl
-                  px-4
-                  py-3
-                  text-[17px]
-                  font-medium
-                  text-slate-800
-                  transition-colors
-                  hover:bg-slate-50
+                  rounded-2xl px-4 py-3 text-[17px]
+                  font-medium text-slate-800
+                  transition-colors hover:bg-slate-50
                 "
               >
                 Support
               </a>
-
             </nav>
           </aside>
         </div>
