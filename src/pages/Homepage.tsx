@@ -1,16 +1,12 @@
-import { ThemeToggle } from '@/components/theme-toogle'
-import React from 'react'
-import {NavigationMenuDemo} from "../components/layout/Navbar"
+import Navbar from "@/components/layout/Navbar";
+
+
 const Homepage = () => {
   return (
- <>
- <ThemeToggle>
-  
- </ThemeToggle>
- <div>hello</div>
-<NavigationMenuDemo/>
- </>
-  )
-}
+    <>
+      <Navbar></Navbar>
+    </>
+  );
+};
 
-export default Homepage
+export default Homepage;
